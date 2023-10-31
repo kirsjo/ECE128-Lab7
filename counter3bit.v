@@ -25,9 +25,17 @@ module counter3bit(
     output Q1,  Q2, Q3
     );
     
+    wire [2:0] t;
     
-    T_FF n1(.rstn(1'b1),.clk(clk), .t(1'b1), .q(Q1));
-    T_FF n2(.rstn(1'b1),.clk(clk), .t(~Q1), .q(Q2));
-    T_FF n3(.rstn(1'b1),.clk(clk), .t(~Q1 & ~Q2), .q(Q3));
+    
+    T_FF n1(.rstn(1'b1),.clk(clk), .t(1'b1), .q(t[0]));
+    
+    T_FF n2(.rstn(1'b1),.clk(clk), .t(~t[0]), .q(t[1]));
+   
+    T_FF n3(.rstn(1'b1),.clk(clk), .t(~t[0]&~t[1]), .q(t[2]));
+    
+    assign Q1 = ~t[0];
+    assign Q2 = ~t[1];
+    assign Q3 = ~t[2];
     
 endmodule
